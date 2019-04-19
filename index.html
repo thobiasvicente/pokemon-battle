@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pokemon Battle</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="panel scores">
+            <div class="score">
+                <img src="pikachu.png" alt="Pikachu" width="175" height="150">
+                <h1>Pikachu</h1>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: pokemonLife1 < 20}" :style="{width: pokemonLife1 + '%'}"></div>
+                </div>
+                <div>{{pokemonLife1}}%</div>
+            </div>
+            <div class="score">
+                <img src="latios.png" alt="Pikachu" width="250" height="150">
+                <h1>Latios</h1>
+                <div class="life-bar">
+                    <div class="life" :class="{danger: pokemonLife2 < 20}" :style="{width: pokemonLife2 + '%'}"></div>
+                </div>
+                <div>{{pokemonLife2}}%</div>
+            </div>
+
+        </div>
+
+        <div v-if="hasResult" class="panel result">
+            <div v-if="pokemonLife2 == 0" class="win">You won the battle!</div>
+            <div v-else class="lose">You lost the battle!</div>
+        </div>
+
+
+        <div class="panel buttons">
+            <template v-if="running">
+                <button @click="attack1(true)" class="btn quick-attack">Quick Attack</button>
+                <button @click="attack(true)" class="btn volt-tackle">Volt Tackle</button>
+                <button @click="attack3(true)" class="btn iron-tail">Iron Tail</button>
+                <button @click="attack2(true)" class="btn thunder-bolt">Thunderbolt</button>
+                <button @click="healAndHurt" class="btn heal">Hp Potion</button>
+                <button @click="running = false" class="btn give-up">Quit Battle</button>
+            </template>
+            <button v-else @click="startBattle" class="btn new-battle">Start Battle</button>
+        </div>
+        <div v-if="logs.length" class="panel logs">
+            <ul>
+                <li v-for="log in logs" :class="log.cls" class="log">{{ log.text }}</li>
+            </ul>
+
+        </div>
+    </div>
+    <script src="app.js"></script>
+
+</body>
+
+</html>
